@@ -1,0 +1,11 @@
+.DS_Store
+*.log
+*.swp
+*.swo
+*~
+*.before-*
+.env
+.env.*
+!.env.example
+*.pem
+*.key
