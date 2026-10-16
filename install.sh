@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Conecta as configurações do repositório ao usuário atual (macOS/Linux).
+# Link this repository's configuration for the current user (macOS/Linux).
 set -euo pipefail
 
 repo_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)"
@@ -9,16 +9,16 @@ source_dir="$repo_dir/nvim"
 
 mkdir -p "$config_dir"
 if [[ -L "$target" && "$(readlink "$target")" == "$source_dir" ]]; then
-  printf 'Neovim já está conectado: %s\n' "$target"
+  printf 'Neovim is already linked: %s\n' "$target"
   exit 0
 fi
 
 if [[ -e "$target" || -L "$target" ]]; then
   backup="${target}.backup-dotfiles-$(date +%Y%m%d-%H%M%S)-$$"
   mv "$target" "$backup"
-  printf 'Backup preservado em: %s\n' "$backup"
+  printf 'Backup saved to: %s\n' "$backup"
 fi
 
 ln -s "$source_dir" "$target"
-printf 'Neovim conectado: %s -> %s\n' "$target" "$source_dir"
-printf 'Abra nvim e execute :Lazy restore para instalar as versões registradas.\n'
+printf 'Neovim linked: %s -> %s\n' "$target" "$source_dir"
+printf 'Open nvim and run :Lazy restore to install the recorded plugin versions.\n'

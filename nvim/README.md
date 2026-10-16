@@ -1,147 +1,145 @@
 # LazyVim + Kotlin + Go
 
-Migrado para o starter oficial do LazyVim, preservando habamax e transparent.nvim.
+Based on the official LazyVim starter, with the habamax theme and transparent.nvim.
 
-## Arquivos
+## Files
 
-- `lua/plugins/custom.lua`: tema, transparência e Kotlin LSP oficial.
-- `lua/config/options.lua`: opções pessoais.
-- `lua/config/keymaps.lua`: atalhos pessoais.
-- `lazy-lock.json`: versões instaladas dos plugins.
-- `scripts/install-kotlin.lua`: instalador auxiliar do Kotlin LSP, contornando
-  o URL direto do CDN do Mason que retornava 404 no momento da instalação.
+- `lua/plugins/custom.lua`: theme, transparency, and the official Kotlin LSP.
+- `lua/config/options.lua`: personal options; whitespace markers are disabled.
+- `lua/config/keymaps.lua`: personal keymaps.
+- `lazy-lock.json`: installed plugin versions.
+- `shortcuts.html`: searchable, printable keyboard shortcut guide.
+- `scripts/install-kotlin.lua`: Kotlin LSP installer with a workaround for the
+  registry's direct CDN URL, which returned HTTP 404 during installation.
 
-Não habilite o extra `lang.kotlin` sem revisar: atualmente ele usa o antigo
-`kotlin_language_server`. Aqui usamos `kotlin_lsp` da JetBrains, já instalado
-pelo Mason, sem instalar um segundo servidor. O autocomplete é o blink.cmp
-padrão do LazyVim, substituindo o nvim-cmp da configuração anterior.
+Review the `lang.kotlin` extra before enabling it: it currently uses the older
+`kotlin_language_server`. This setup uses JetBrains' official `kotlin_lsp`,
+already installed through Mason, without running a second Kotlin server.
+Completion uses LazyVim's default blink.cmp, replacing the previous nvim-cmp setup.
 
-## Começar
+## Getting started
 
 ```sh
-cd /caminho/do/projeto
+cd /path/to/project
 nvim .
 ```
 
-O líder é Espaço. Pressione Espaço e aguarde para ver os atalhos disponíveis.
+The leader key is **Space**. Press it and wait to see available shortcuts.
+Most shortcuts below are used in normal mode; press Escape to return to it.
 
-| Atalho | Ação |
+| Shortcut | Action |
 | --- | --- |
-| Espaço e | Explorador de arquivos |
-| Espaço Espaço | Buscar arquivo |
-| Espaço / | Buscar texto no projeto |
-| Espaço , | Buscar buffers abertos |
-| Shift+h / Shift+l | Buffer anterior/próximo |
-| Espaço bd | Fechar buffer |
-| Espaço gg | Interface Git (lazygit) |
-| Espaço ft | Terminal do projeto |
-| gd | Definição |
-| gr | Referências |
-| K | Documentação |
-| Espaço cr | Renomear símbolo |
-| Espaço ca | Ações de código |
-| Espaço cf | Formatar |
-| Espaço ut | Alternar transparência |
-| Espaço cm | Mason |
-| Espaço l | Lazy |
+| Space e | File explorer |
+| Space Space | Find files |
+| Space / | Search project text |
+| Space , | Find open buffers |
+| Shift+h / Shift+l | Previous / next buffer |
+| Space bd | Close buffer |
+| Space gg | Git interface (lazygit) |
+| Space ft | Project terminal |
+| gd | Go to definition |
+| gr | References |
+| K | Documentation |
+| Space cr | Rename symbol |
+| Space ca | Code actions |
+| Space cf | Format |
+| Space ut | Toggle transparency |
+| Space cm | Mason |
+| Space l | Lazy |
 
-`:wq` salva e sai; `:q!` sai sem salvar. Há mais atalhos em:
-https://www.lazyvim.org/keymaps
+`:wq` saves and closes the window; `:q!` closes without saving.
+More shortcuts: https://www.lazyvim.org/keymaps
 
-O fundo continua sendo o do seu terminal. Janelas flutuantes mantêm o fundo
-para legibilidade. Se os ícones aparecerem como quadrados, selecione uma Nerd
-Font nas preferências do terminal; nenhuma fonte do terminal foi alterada.
+Transparency uses your terminal's background. Floating windows retain their
+background for readability. Select a Nerd Font in your terminal preferences if
+icons appear as squares. The setup does not change terminal fonts or opacity.
+Indent guides and whitespace markers are disabled by default.
 
 ## Markdown
 
-Extra oficial `lang.markdown` habilitado:
+The official `lang.markdown` extra provides:
 
-- Renderização no editor com render-markdown.nvim: `Espaço um` alterna.
-- Preview ao vivo no navegador: `Espaço cp` ou `:MarkdownPreviewToggle`.
-- `:MarkdownPreviewStop` encerra o preview.
-- Marksman fornece navegação/diagnósticos de Markdown.
-- markdownlint-cli2 e markdown-toc instalados via Mason.
+- In-editor rendering with render-markdown.nvim: toggle with `Space um`.
+- Live browser preview: `Space cp` or `:MarkdownPreviewToggle`.
+- `:MarkdownPreviewStop` to stop the preview.
+- Markdown navigation and diagnostics through Marksman.
+- markdownlint-cli2 and markdown-toc installed through Mason.
 
-Abra um arquivo `.md` para usar. No modo de inserção, a linha sob edição pode
-mostrar a sintaxe original; isso é esperado. A renderização é apenas visual,
-sem alterar o conteúdo do arquivo. O preview no navegador usa o estilo próprio,
-não o fundo transparente do terminal.
+Open a `.md` file to use these features. The line being edited may show raw
+Markdown in insert mode; this is expected. Rendering does not change the file's
+contents. The browser preview has its own styling, not the terminal background.
 
-Validados: renderização habilitada, conexão com Marksman e resposta HTTP do
-servidor de preview. O navegador não foi aberto durante o teste automatizado.
+Validated: enabled rendering, Marksman connection, and an HTTP response from
+the preview server. The automated test did not open a browser window.
 
 ## Go
 
-Habilitados os extras oficiais `lang.go`, `dap.core` e `test.core`.
-O Go já estava instalado (1.27.1). Ferramentas disponíveis via Mason:
-`gopls`, `goimports`, `gofumpt`, `delve` e `golangci-lint`.
+Enabled extras: `lang.go`, `dap.core`, and `test.core`.
+Go was already installed (1.27.1). Mason tools include `gopls`, `goimports`,
+`gofumpt`, `delve`, and `golangci-lint`.
 
-Abra a raiz do módulo:
+Open the module root with `nvim .`. For a new project, first run:
 
 ```sh
-cd /caminho/do/projeto
-nvim .
+go mod init example.com/my-project
 ```
 
-Para um projeto novo, execute `go mod init exemplo.com/meu-projeto` antes.
-O gopls fornece autocomplete, navegação, diagnósticos e ações de código.
-Goimports organiza imports e gofumpt formata o código; o LazyVim também
-formata ao salvar (alternável em Espaço uf).
+gopls provides completion, navigation, diagnostics, and code actions. goimports
+organizes imports and gofumpt formats code. LazyVim also formats on save;
+toggle this with `Space uf`.
 
-| Atalho | Ação |
+| Shortcut | Action |
 | --- | --- |
-| Espaço cf | Formatar/organizar imports |
-| Espaço ca | Ações de código |
-| Espaço cr | Renomear símbolo |
-| Espaço tr | Rodar teste mais próximo |
-| Espaço tt | Rodar testes do arquivo |
-| Espaço tT | Rodar testes do diretório atual |
-| Espaço ts | Painel de testes |
-| Espaço to | Saída do teste |
-| Espaço db | Alternar breakpoint |
-| Espaço dc | Iniciar/continuar debug; selecionar a configuração Go |
-| Espaço dO | Step over |
-| Espaço di | Step into |
-| Espaço dt | Encerrar debug |
-| Espaço du | Painel do debugger |
-| Espaço td | Debug do teste mais próximo |
+| Space cf | Format and organize imports |
+| Space ca | Code actions |
+| Space cr | Rename symbol |
+| Space tr | Run nearest test |
+| Space tt | Run tests in the current file |
+| Space tT | Run tests in the current directory |
+| Space ts | Test summary panel |
+| Space to | Test output |
+| Space db | Toggle breakpoint |
+| Space dc | Start / continue debugging; select a Go configuration |
+| Space dO | Step over |
+| Space di | Step into |
+| Space dt | Terminate debugging |
+| Space du | Debugger panel |
+| Space td | Debug nearest test |
 
-Validação: gopls inicializado, parsers Go instalados, formatação funcionando,
-adapter Delve configurado, `go test`, `go vet`, golangci-lint e teste executado
-pelo Neotest passaram em módulo temporário. Não foi executada uma sessão de
-debug interativa nem validado um projeto real do usuário.
-
-Backup anterior à configuração de Go:
-`~/.config/nvim.backup-go-20261015-230057`.
-Nenhum perfil de shell foi modificado.
+Validated in a temporary module: gopls initialization, Go parsers, formatting,
+Delve adapter configuration, `go test`, `go vet`, golangci-lint, and a test run
+through Neotest. An interactive debug session and a real user project were not
+tested. No shell profiles were changed.
 
 ## Kotlin
 
-O LSP inicia dentro de projetos com settings.gradle(.kts), build.gradle(.kts),
-pom.xml ou workspace.json. O runtime do servidor vem integrado. Para compilar
-ou importar projetos reais, ainda pode ser necessário configurar JAVA_HOME
-com um JDK compatível com o projeto/Gradle. Nenhum perfil de shell foi alterado.
+The LSP starts in projects containing settings.gradle(.kts), build.gradle(.kts),
+pom.xml, or workspace.json. The server includes a Java runtime. Compiling or
+importing projects may still require JAVA_HOME pointing to a JDK compatible
+with the project and Gradle version. No shell profiles were changed.
 
-Validação realizada: inicialização do LSP oficial em uma raiz de teste,
-carregamento do tema habamax, remoção do background e instalação do parser Kotlin.
-Não foi validada a compilação de um projeto real do usuário.
+Validated: official LSP initialization in a test root, habamax loading,
+background transparency, and Kotlin parser installation. Building a real user
+project was not tested.
 
-Para reinstalar o servidor caso seja removido:
+To reinstall the server if removed:
 
 ```sh
 nvim --headless '+luafile ~/.config/nvim/scripts/install-kotlin.lua'
 ```
 
-## Backup e restauração
+## Local migration backups
 
-Configuração anterior completa:
-`~/.config/nvim.backup-20261015-225455`
+These backups exist only on the original machine, not in this repository:
 
-A pasta de dados foi reutilizada para preservar o servidor Kotlin e seu runtime.
-Os plugins compartilhados foram sincronizados com as versões do LazyVim;
-o backup inclui o lockfile anterior, mas não uma cópia da pasta de dados.
+- Before LazyVim: `~/.config/nvim.backup-20261015-225455`
+- Before Go support: `~/.config/nvim.backup-go-20261015-230057`
 
-Para restaurar, feche todas as instâncias do Neovim e execute:
+The data directory was reused to preserve the Kotlin server and its runtime.
+Shared plugins were synchronized to LazyVim's versions. The configuration
+backup includes the old lockfile, but not a copy of the data directory.
+
+To restore the pre-LazyVim configuration, close Neovim and run:
 
 ```sh
 mv ~/.config/nvim ~/.config/nvim.lazyvim-saved-$(date +%Y%m%d-%H%M%S)
@@ -149,4 +147,5 @@ cp -R ~/.config/nvim.backup-20261015-225455 ~/.config/nvim
 nvim --headless '+Lazy! restore' +qa
 ```
 
-Isso restaura a configuração e as versões anteriores dos plugins.
+This replaces the active configuration link with a standalone configuration
+and restores its recorded plugin versions; the dotfiles repository remains intact.

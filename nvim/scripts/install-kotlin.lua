@@ -2,7 +2,7 @@ local registry = require("mason-registry")
 local finished, success = false, false
 registry.refresh(function(ok)
     if not ok then
-        print("Falha ao atualizar o registro Mason")
+        print("Failed to refresh the Mason registry")
         finished = true
         return
     end
@@ -13,13 +13,13 @@ registry.refresh(function(ok)
     end
     pkg:once("install:success", function()
         success, finished = true, true
-        print("Kotlin LSP instalado")
+        print("Kotlin LSP installed")
     end)
     pkg:once("install:failed", function()
         finished = true
-        print("Falha ao instalar Kotlin LSP; consultar mason.log")
+        print("Failed to install Kotlin LSP; see mason.log")
     end)
-    -- O CDN direto retorna 404; o domínio oficial gera o redirecionamento assinado.
+    -- The direct CDN URL returns 404; the official domain provides a signed redirect.
     local function fix_urls(tbl)
         for k, v in pairs(tbl) do
             if type(v) == "table" then
@@ -33,6 +33,6 @@ registry.refresh(function(ok)
     pkg:install()
 end)
 if not vim.wait(600000, function() return finished end, 200) then
-    print("Tempo limite da instalação excedido")
+    print("Installation timed out")
 end
 vim.cmd(success and "qa!" or "cquit 1")

@@ -2,5 +2,5 @@
 -- Default options that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
 -- Add any additional options here
 
--- Ocultar os símbolos visuais de tabs e espaços, sem alterar o arquivo.
+-- Hide visual tab and space markers without changing file contents.
 vim.opt.list = false

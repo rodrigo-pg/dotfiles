@@ -1,82 +1,80 @@
 # Dotfiles
 
-Repositório de configurações pessoais. Atualmente inclui o Neovim; outras
-configurações podem ser adicionadas em pastas próprias, sem copiar segredos.
+Personal configuration files, currently including Neovim. Additional tools can
+be added in their own directories. Never include credentials or other secrets.
 
-## Estrutura
+## Structure
 
 ```text
-nvim/        Configuração LazyVim, Go, Kotlin, Markdown, tema e atalhos
-install.sh   Cria o link da configuração, preservando backup da anterior
+nvim/        LazyVim, Go, Kotlin, Markdown, theme, and keyboard shortcuts
+install.sh   Links the configuration and backs up any existing setup
 ```
 
-`~/.config/nvim` aponta para `nvim/` deste repositório. Alterações feitas pelo
-Neovim, inclusive no lockfile, ficam diretamente aqui. Não mova ou apague o
-repositório sem atualizar o link.
+`~/.config/nvim` links to this repository's `nvim/` directory. Changes made by
+Neovim, including lockfile updates, are written directly here. Update the link
+if you move the repository.
 
-## Instalar em outro computador (macOS/Linux)
-
-Depois de transferir ou clonar o repositório:
+## Install on another computer (macOS/Linux)
 
 ```sh
-cd /caminho/do/dotfiles
+git clone https://github.com/rodrigo-pg/dotfiles.git ~/projects/dotfiles
+cd ~/projects/dotfiles
 ./install.sh
 nvim
 ```
 
-No Neovim, execute `:Lazy restore` para instalar as versões do `lazy-lock.json`.
-Requisitos: Neovim >= 0.11.2 com LuaJIT, Git, curl, unzip, ripgrep, fd, fzf,
-lazygit, Node.js/npm, compilador C e tree-sitter CLI. Go precisa estar instalado
-para desenvolver em Go. Projetos Kotlin podem exigir um JDK compatível.
-Nerd Font é recomendada para os ícones.
+In Neovim, run `:Lazy restore` to install the versions in `lazy-lock.json`.
 
-As ferramentas são instaladas pelo Mason ao carregar os recursos correspondentes.
-O Kotlin LSP usa o instalador auxiliar, pois seu URL no catálogo retornava 404:
+Requirements: Neovim >= 0.11.2 with LuaJIT, Git, curl, unzip, ripgrep, fd, fzf,
+lazygit, Node.js/npm, a C compiler, and the tree-sitter CLI. Install Go for Go
+development. Kotlin projects may require a compatible JDK. A Nerd Font is
+recommended for icons.
+
+Mason installs tools as the corresponding features load. The Kotlin LSP uses a
+helper script because the registry's direct CDN URL returned HTTP 404 during
+setup:
 
 ```sh
 nvim --headless '+luafile ~/.config/nvim/scripts/install-kotlin.lua'
 ```
 
-Se usar XDG_CONFIG_HOME personalizado, ajuste esse caminho.
-A fonte e a opacidade do terminal são configuradas separadamente.
-Ative a transparência no Neovim com `:TransparentEnable`.
+Adjust this path if you use a custom `XDG_CONFIG_HOME`. Configure the terminal
+font and opacity separately. Enable Neovim transparency with `:TransparentEnable`.
 
-O instalador cria backups antes de substituir uma configuração existente e não
-instala dependências nem altera perfis de shell. Plugins, caches, servidores e
-histórico do Neovim não são versionados; são baixados na máquina de destino.
-No Windows, a configuração deve ser colocada em `%LOCALAPPDATA%\nvim`;
-o instalador shell não é destinado ao Windows.
+The installer backs up an existing configuration before replacing it. It does
+not install dependencies or change shell profiles. Plugins, language servers,
+caches, and editing history are not tracked; install tools on the destination
+machine. On Windows, place the configuration in `%LOCALAPPDATA%\nvim` instead;
+the shell installer targets macOS/Linux only.
 
-## Uso diário
+## Everyday use
 
 ```sh
 cd ~/projects/dotfiles
 git status
 git diff
 git add .
-git commit -m "Atualiza configurações"
+git commit -m "Update configuration"
+git push
 ```
 
-Antes do primeiro commit, configure sua identidade Git se necessário:
+Configure your Git identity on a new computer if needed:
 
 ```sh
-git config user.name "Seu Nome"
-git config user.email "seu-email"
+git config user.name "Your Name"
+git config user.email "you@example.com"
 ```
 
-Os comandos acima configuram a identidade somente neste repositório.
-Para sincronizar entre computadores, crie um repositório remoto e adicione-o:
+These commands set the identity only for this repository. The repository is
+public: review changes before pushing. Temporary backups and common secret
+file patterns are ignored, but this does not replace a manual review.
+
+## Keyboard shortcuts
+
+Open [the shortcut guide](nvim/shortcuts.html) in a browser. On macOS:
 
 ```sh
-git remote add origin URL_DO_REPOSITORIO
-git push -u origin main
+open ~/.config/nvim/shortcuts.html
 ```
 
-Nenhum remoto foi criado nem dados foram publicados automaticamente. Revise os
-arquivos antes de publicar. Backups temporários e arquivos comuns de segredos
-são ignorados, mas isso não substitui uma revisão manual.
-
-## Guia de atalhos
-
-Abra `nvim/atalhos.html` no navegador (no Mac: `open ~/.config/nvim/atalhos.html`).
-Mais instruções específicas em `nvim/README.md`.
+See [the Neovim README](nvim/README.md) for language support and setup details.

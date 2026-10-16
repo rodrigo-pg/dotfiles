@@ -3,7 +3,7 @@ return {
     "folke/snacks.nvim",
     opts = { indent = { enabled = false } },
   },
-  -- Preservar o tema usado na configuração anterior.
+  -- Keep the theme from the previous configuration.
   { "LazyVim/LazyVim", opts = { colorscheme = "habamax" } },
   {
     "xiyaowong/transparent.nvim",
@@ -17,16 +17,16 @@ return {
       require("transparent").clear_prefix("lualine")
     end,
     keys = {
-      { "<leader>ut", "<cmd>TransparentToggle<cr>", desc = "Alternar transparência" },
+      { "<leader>ut", "<cmd>TransparentToggle<cr>", desc = "Toggle Transparency" },
     },
   },
   {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
-        -- Não usar o antigo servidor fwcd do extra lang.kotlin.
+        -- Do not use the older fwcd server from the lang.kotlin extra.
         kotlin_language_server = { enabled = false },
-        -- Já instalado pelo Mason, com runtime Java integrado.
+        -- Already installed through Mason, with a bundled Java runtime.
         kotlin_lsp = { mason = false },
       },
     },
