@@ -1,0 +1,74 @@
+# Reuse the tools installed by Neovim's Mason without changing the shell PATH.
+# sh expands the user's home directory at runtime, keeping this file portable.
+
+[language-server.gopls]
+command = "sh"
+args = ["-c", 'exec "${XDG_DATA_HOME:-$HOME/.local/share}/nvim/mason/bin/gopls"']
+
+[language-server.gopls.config]
+gofumpt = true
+staticcheck = true
+completeUnimported = true
+usePlaceholders = true
+
+[language-server.kotlin-lsp]
+command = "sh"
+args = ["-c", 'exec "${XDG_DATA_HOME:-$HOME/.local/share}/nvim/mason/bin/intellij-server" --stdio']
+timeout = 120
+
+[[language]]
+name = "go"
+language-servers = ["gopls"]
+auto-format = true
+
+# Go launch/attach/test templates using Mason's Delve.
+[language.debugger]
+name = "go"
+transport = "tcp"
+command = "sh"
+args = ["-c", 'exec "${XDG_DATA_HOME:-$HOME/.local/share}/nvim/mason/bin/dlv" "$@"', "helix-delve", "dap"]
+port-arg = "-l 127.0.0.1:{}"
+
+[[language.debugger.templates]]
+name = "source"
+request = "launch"
+completion = [{ name = "entrypoint", completion = "filename", default = "." }]
+args = { mode = "debug", program = "{0}" }
+
+[[language.debugger.templates]]
+name = "test"
+request = "launch"
+completion = [{ name = "tests", completion = "directory", default = "." }]
+args = { mode = "test", program = "{0}" }
+
+[[language.debugger.templates]]
+name = "binary"
+request = "launch"
+completion = [{ name = "binary", completion = "filename" }]
+args = { mode = "exec", program = "{0}" }
+
+[[language.debugger.templates]]
+name = "attach"
+request = "attach"
+completion = ["pid"]
+args = { mode = "local", processId = "{0}" }
+
+[[language]]
+name = "gomod"
+language-servers = ["gopls"]
+auto-format = true
+
+[[language]]
+name = "gowork"
+language-servers = ["gopls"]
+auto-format = true
+
+[[language]]
+name = "gotmpl"
+language-servers = ["gopls"]
+
+[[language]]
+name = "kotlin"
+language-servers = ["kotlin-lsp"]
+roots = ["settings.gradle", "settings.gradle.kts", "build.gradle", "build.gradle.kts", "pom.xml", "workspace.json"]
+auto-format = true

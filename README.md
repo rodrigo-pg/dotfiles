@@ -1,18 +1,19 @@
 # Dotfiles
 
-Personal configuration files, currently including Neovim. Additional tools can
+Personal configuration files for Neovim and Helix. Additional tools can
 be added in their own directories. Never include credentials or other secrets.
 
 ## Structure
 
 ```text
 nvim/        LazyVim, Go, Kotlin, Markdown, theme, and keyboard shortcuts
-install.sh   Links the configuration and backs up any existing setup
+helix/       Helix Go and official Kotlin LSP integration using Mason tools
+install.sh   Links both configurations and backs up any existing setup
 ```
 
-`~/.config/nvim` links to this repository's `nvim/` directory. Changes made by
-Neovim, including lockfile updates, are written directly here. Update the link
-if you move the repository.
+`~/.config/nvim` and `~/.config/helix` link to the corresponding directories
+in this repository. Configuration edits, including Neovim lockfile updates,
+are written directly here. Update the links if you move the repository.
 
 ## Install on another computer (macOS/Linux)
 
@@ -78,3 +79,10 @@ open ~/.config/nvim/shortcuts.html
 ```
 
 See [the Neovim README](nvim/README.md) for language support and setup details.
+
+## Helix
+
+Install Helix separately (`brew install helix` on macOS), then run `hx .` in a
+project. Its Go and Kotlin integration reuses the Mason-installed servers, so
+install those tools through the Neovim setup first. No shell PATH changes are
+needed. See [the Helix README](helix/README.md) for details and shortcuts.
